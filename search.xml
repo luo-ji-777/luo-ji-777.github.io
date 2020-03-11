@@ -11,11 +11,11 @@
 <p>用一个数组来保存数列，是典型的以空间换时间的做法，缩短了大量计算时间，大大提高了算法的计算效率。</p>
 ]]></content>
       <categories>
-        <category>web前端</category>
+        <category>算法</category>
       </categories>
       <tags>
-        <tag>jQuery</tag>
-        <tag>表格</tag>
+        <tag>算法</tag>
+        <tag>动态规划</tag>
       </tags>
   </entry>
   <entry>
