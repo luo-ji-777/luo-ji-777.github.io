@@ -1,8 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>死锁</title>
+    <url>/2020/04/448453639.html</url>
+    <content><![CDATA[<h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><p>  &emsp; <strong>死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。</strong></p>
+<hr>
+<h2 id="死锁产生的原因："><a href="#死锁产生的原因：" class="headerlink" title="死锁产生的原因："></a>死锁产生的原因：</h2><ul>
+<li><strong>系统资源的竞争</strong></li>
+<li><strong>进程运行推进的顺序不当</strong></li>
+</ul>
+<hr>
+<h2 id="死锁产生的必要条件（缺一不可）"><a href="#死锁产生的必要条件（缺一不可）" class="headerlink" title="死锁产生的必要条件（缺一不可）"></a>死锁产生的必要条件（缺一不可）</h2><ul>
+<li><strong>互斥：每个资源要么已经分配给了一个进程，要么就是可用的。</strong></li>
+<li><strong>占有和等待：已经得到了某个资源的进程可以再请求新的资源。</strong></li>
+<li><strong>不可抢占：已经分配给一个进程的资源不能强制性地被抢占，它只能被占有它的进程显式地释放。</strong></li>
+<li><strong>环路等待：有两个或者两个以上的进程组成一条环路，该环路中的每个进程都在等待下一个进程所占有的资源。</strong></li>
+</ul>
+<hr>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>  <strong>主要有以下四种：</strong></p>
+<ul>
+<li><strong>鸵鸟策略</strong></li>
+<li><strong>死锁检测与死锁恢复</strong></li>
+<li><strong>死锁预防</strong></li>
+<li><strong>死锁避免</strong></li>
+</ul>
+<hr>
+<h2 id="鸵鸟策略"><a href="#鸵鸟策略" class="headerlink" title="鸵鸟策略"></a>鸵鸟策略</h2><p>  <strong>把头埋在沙子里，假装根本没发生问题。</strong></p>
+<blockquote>
+<p>大多数操作系统，包括 Unix，Linux 和 Windows，处理死锁问题的办法仅仅是忽略它。</p>
+</blockquote>
+<h6 id="为什么可行？"><a href="#为什么可行？" class="headerlink" title="为什么可行？"></a>为什么可行？</h6><ol>
+<li>解决死锁问题的代价很高，这种方案会获得更高的性能。</li>
+<li>发生死锁时不会对用户造成多大影响，或发生死锁的概率很低。</li>
+</ol>
+<hr>
+<h2 id="死锁检测"><a href="#死锁检测" class="headerlink" title="死锁检测"></a>死锁检测</h2><p>&emsp;<strong>事先不采取任何限制性措施,也不检查系统是否进入不安全区,此方法允许系统在运行过程中发生死锁。但可通过检测机构,及时地检测出死锁的发生,并精确地确定与死锁有关的进程和资源,然后采取适当措施,从系统中将已发生的死锁清除掉。</strong></p>
+<hr>
+<h2 id="死锁恢复"><a href="#死锁恢复" class="headerlink" title="死锁恢复"></a>死锁恢复</h2><ul>
+<li>利用抢占恢复</li>
+<li>利用回滚恢复</li>
+<li>通过杀死进程恢复</li>
+</ul>
+<hr>
+<h2 id="死锁预防（破坏必要条件之一）"><a href="#死锁预防（破坏必要条件之一）" class="headerlink" title="死锁预防（破坏必要条件之一）"></a>死锁预防（破坏必要条件之一）</h2><ol>
+<li><strong>破坏互斥条件</strong></li>
+<li><strong>破坏占有和等待条件</strong><br>一种实现方式是规定所有进程在开始执行前请求所需要的全部资源。</li>
+<li><strong>破坏不可抢占资源</strong></li>
+<li><strong>破坏环路等待</strong><br>给资源统一编号，进程只能按编号顺序来请求资源。</li>
+</ol>
+<hr>
+<h2 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h2><p><strong>在资源的动态分配过程中,用某种方法去防止系统进入不安全状态,从而避免发生死锁。<br>常用的实施方法是撤销或挂起一些进程，以便回收一些资源，再将这些资源分配给处于阻塞状态的进程,使之转为就绪状态，以继续运行。</strong></p>
+<hr>
+<h2 id="死锁解答题"><a href="#死锁解答题" class="headerlink" title="死锁解答题"></a>死锁解答题</h2><ul>
+<li><strong>n个进程竞争m个资源，问最少需要多少个资源，系统才不会发生死锁?</strong></li>
+</ul>
+<p>最极端的情况是每个进程有m-1个资源，而总资源一共就有n(m-1)个，那么这个时候也会发生死锁，这个时候只需要再多出一个资源，就可以保证某一个进程执行成功，然后执行成功以后，就会有更多的资源释放，后面的进程也可以执行。所以最终的结果就是n(m-1)+1</p>
+<ul>
+<li><strong>有同类资源m个，被n个进程共享，当M&gt;N和 M&lt;=N时候，每个进程最多请求多少个这类资源，一定不会死锁？</strong></li>
+</ul>
+<p>例如11个同类资源被5个进程共享，每个进程最多可以请求多3个资源才能保证系统不会发生死锁。<br>因为如每个进程都已分配到2个资源，系统还剩下一个资源，就能保证某一个进程能分配到全部3个资源，并能运行到底，最终释放这3个资源。</p>
+<p>​ 当m＞n时，设一个进程最多可以请求多x个资源，故当m &gt; n * (x-1)时，系统不会发生死锁。<br>于是：<br>​ x – 1 &lt; m / n<br>​ x &lt; m / n +1</p>
+<p>​ 当 m 能被n除尽时，x = m/n<br>​ 当 m 不能被n除尽时，x = (m/n)+1<br>​ 当m &lt;＝n时，每个进程最多可以请求1个资源。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>死锁</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fibonacci数列</title>
-    <url>/2020/02/3330447768.html</url>
+    <url>/2020/01/3330447768.html</url>
     <content><![CDATA[<h1 id="Fibonacci数列"><a href="#Fibonacci数列" class="headerlink" title="Fibonacci数列"></a>Fibonacci数列</h1><h2 id="问题介绍"><a href="#问题介绍" class="headerlink" title="问题介绍"></a>问题介绍</h2><p>斐波那契数列是这样的一组数列：<br><img src="https://img-blog.csdnimg.cn/20200212192822244.png" alt="斐波那契数列"><br>这个数列从第三项起，每一项都等于前两项之和。</p>
 <p>现在输入一个正整数n,输出数列中的第n个数。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="分治法"><a href="#分治法" class="headerlink" title="分治法"></a>分治法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">   if(n &lt; 2) return n;  &#x2F;&#x2F;如果n为0，则直接返回0，如果n为1，则直接返回1</span><br><span class="line">   else return  Fibonacci(n - 1) + Fibonacci (n - 2);  &#x2F;&#x2F;如果n为大于1，返回前两项的结果之和</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
