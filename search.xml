@@ -1,8 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>git指令</title>
+    <url>/2020/09/3043816475.html</url>
+    <content><![CDATA[<h2 id="设置签名"><a href="#设置签名" class="headerlink" title="设置签名"></a>设置签名</h2><ul>
+<li><p>项目级别/仓库级别 ：仅在当前本地库范围内有效</p>
+<ul>
+<li><p>git config user.name luoji_pro</p>
+</li>
+<li><p>git config user.email <a href="mailto:luoji_pro@foxmail.com">luoji_pro@foxmail.com</a></p>
+</li>
+<li><p>信息保存位置：./.git/config文件     可以用cat命令打开</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>系统用户级别：登录当前操作系统的用户范围</p>
+<ul>
+<li>在上面的指令中加上 –global</li>
+<li>信息保存位置： ~/.gitconfig 文件</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="git结构"><a href="#git结构" class="headerlink" title="git结构"></a>git结构</h2><ul>
+<li>工作区：写代码的地方。通过<strong>git add</strong>指令将新建/修改添加到暂存区。</li>
+<li>暂存区：临时存储的地方。通过<strong>git commit</strong>指令将新建/修改提交到本地库。</li>
+<li>本地库：存放历史版本的地方。</li>
+</ul>
+<p>  <strong>PS. 也可以直接将新建/修改从工作区提交到本地库，但这么做就不能再撤销了。</strong></p>
+<hr>
+<h2 id="提交-命令"><a href="#提交-命令" class="headerlink" title="提交 命令"></a>提交 命令</h2><h3 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h3><ul>
+<li>查看工作区，暂存区的状态，如果没有任何可以提交的文件，就使用git add 命令提交文件到暂存区。</li>
+</ul>
+<h3 id="git-add"><a href="#git-add" class="headerlink" title="git add "></a>git add <filename></h3><ul>
+<li>将工作区的新建/修改添加到暂存区 ，如果后悔了，可以使用<strong>git rm –cached <file></strong>命令，将file从暂存区移除。</li>
+</ul>
+<h3 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit "></a>git commit <filename></h3><ul>
+<li>提交命令，将暂存区的内容添加到本地库，直接使用则会出现：please enter the commit message for you changes.<ul>
+<li>这是让添加注释，此时git自动调用vim编辑器。按i键进入编辑模式。编辑完后，按ESC，然后:wq后按回车，退出vim编辑器。然后commit命令执行完成。</li>
+<li>也可以直接使用<strong>git commit -m “在这里直接输入注释信息” <filename></strong> 来直接输入注释，不需要再进入vim编辑器了。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="版本控制-命令"><a href="#版本控制-命令" class="headerlink" title="版本控制 命令"></a>版本控制 命令</h2><h3 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h3><ul>
+<li>查看日志。 显示的内容非常详细。<ul>
+<li>直接使用时，多屏显示控制方式：  空格为向下翻页，b向上翻页，q退出。</li>
+</ul>
+</li>
+<li>可以使用<strong>git log –pretty=oneline</strong>指令，查看简洁的日志。显示出每次操作的哈希值和操作内容。</li>
+<li>可以使用<strong>git log –oneline</strong>指令，和上一个指令相比，只显示部分的哈希值，更加简洁。</li>
+<li>可以使用<strong>git reflog</strong>指令，和上一个指令相比，加入了一个指针数据，显示移动到相应操作所需移动的指针的次数。即： <strong>HEAD@{移动到当前版本需要的步数}</strong></li>
+<li>查看当前HEAD指针所在位置：<strong>git reset –hard HEAD</strong> </li>
+</ul>
+<h3 id="版本前进-后退"><a href="#版本前进-后退" class="headerlink" title="版本前进/后退"></a>版本前进/后退</h3><ol>
+<li><p>基于索引值操作[推荐]</p>
+<ul>
+<li><strong>git reset –hard [索引值]</strong>     索引值就是每条记录的哈希值，可以是全部索引值，也可以是局部索引值。</li>
+</ul>
+</li>
+<li><p>使用^符号  </p>
+<ul>
+<li>只能后退，不能前进。</li>
+<li><strong>git reset –hard^</strong>      有几个^符号，就后退几个版本，向后退两个，就^^，向后退n个，就n个^。</li>
+</ul>
+</li>
+<li><p>使用~符号</p>
+<ul>
+<li>只能后退，不能前进。</li>
+<li><strong>git reset –hard HEAD~n</strong>  表示后退n步。</li>
+</ul>
+</li>
+</ol>
+<h4 id="reset命令的三个参数对比"><a href="#reset命令的三个参数对比" class="headerlink" title="reset命令的三个参数对比"></a>reset命令的三个参数对比</h4><ul>
+<li>–soft  参数<ul>
+<li>仅仅移动本地库HEAD指针</li>
+</ul>
+</li>
+<li>– mixed  参数<ul>
+<li>在本地库移动HEAD指针</li>
+<li>重置暂存区</li>
+</ul>
+</li>
+<li>– hard  参数<ul>
+<li>在本地库移动HEAD指针</li>
+<li>重置暂存区</li>
+<li>重置工作区</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="比较文件-命令"><a href="#比较文件-命令" class="headerlink" title="比较文件 命令"></a>比较文件 命令</h2><ul>
+<li>使用 <strong>git diff <filename></strong> 来进行比较。<ul>
+<li>将工作区中的文件和暂存区进行比较。</li>
+<li>如果不带文件名，则比较所有文件。</li>
+</ul>
+</li>
+<li>使用  <strong>git diff [本地库中的历史版本] [文件名]</strong> <ul>
+<li>将工作区中的文件与本地库历史记录比较。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><ul>
+<li>什么是分支？</li>
+</ul>
+<p>​         在版本控制过程中，使用多条线同时推进多个任务。最初有一条主干分支master，后续创建的分支从master分支复制出去。</p>
+<ul>
+<li>分支的好处<ul>
+<li>可以同时推进多个功能的开发，提高开发效率。</li>
+<li>各个分支在开发过程中，如果某一个分支开发失败，不会对其他分支有任何影响，各分支相互独立，失败的分支删除掉重新开始就可以了。</li>
+</ul>
+</li>
+</ul>
+<h3 id="分支管理-指令"><a href="#分支管理-指令" class="headerlink" title="分支管理 指令"></a>分支管理 指令</h3><ul>
+<li><p>查看已有分支</p>
+<ul>
+<li><strong>git branch -v</strong>  </li>
+</ul>
+</li>
+<li><p>创建分支</p>
+<ul>
+<li><strong>git branch &lt;分支名&gt;</strong>  </li>
+</ul>
+</li>
+<li><p>切换分支</p>
+<ul>
+<li><strong>git checkout &lt;分支名&gt;</strong>  </li>
+</ul>
+</li>
+<li><p>合并分支</p>
+<ol>
+<li>第一步，切换到接受合并的分支上     <strong>git checkout &lt;接受合并的分支名&gt;</strong>；</li>
+<li>第二步，执行合并操作，使用  <strong>git merge &lt;另一个分支名（即被合并的有新内容的分支名）&gt;</strong> 指令。</li>
+</ol>
+</li>
+<li><p>解决冲突</p>
+<p>​       如果两个分支同时对同一个文件的同一个地方做了修改，此时如果再合并的话，系统不知道该舍弃哪一个，此时就会自动合并失败(Automatic merge failed).</p>
+<ul>
+<li><p>冲突的表现：在文件内容里，出现两个分支的内容。</p>
+</li>
+<li><p>冲突的解决：</p>
+<ol>
+<li>第一步：手动去编辑文件修改（如使用vim指令）， 并删除特殊符号；</li>
+<li>第二步：改完后，保存退出；</li>
+<li>第三步：<strong>git add <filename></strong></li>
+<li>第四步：git commit -m”日志信息”         <strong>此时，commit后面不能带文件名</strong>。</li>
+</ol>
+<p>​        </p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="远程库操作"><a href="#远程库操作" class="headerlink" title="远程库操作"></a>远程库操作</h2><ul>
+<li><p>新建别名 命令</p>
+<p>​       与远程库交互时，需要知道远程库的地址，如<a href="https://gitee.com/wumeidewunv/test_push.git" target="_blank" rel="noopener">https://gitee.com/wumeidewunv/test_push.git</a>    </p>
+<p>但是，这个地址太长，不可能记住，所以可以用<strong>git remote</strong>指令将该地址重新命名。</p>
+<p>​        该指令举例： <strong>git remote add origin <a href="https://gitee.com/wumeidewunv/test_push.git" target="_blank" rel="noopener">https://gitee.com/wumeidewunv/test_push.git</a></strong></p>
+<ul>
+<li>该指令中：  origin为自定义的地址别名，后面跟的是需要被重命名的地址。</li>
+<li>用 <strong>git remote -v</strong> 查看别名与地址的对应关系。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>远程推送</p>
+<p>使用<strong>git pull [远程库别名] [分支名]</strong> 命令将本地库内容推送到远程库中。</p>
+<ul>
+<li>如：<strong>git pull origin master</strong>    origin为上一条指令（<strong>git remote add origin <a href="https://gitee.com/wumeidewunv/test_push.git" target="_blank" rel="noopener">https://gitee.com/wumeidewunv/test_push.git</a></strong>）执行后地址 <strong><a href="https://gitee.com/wumeidewunv/test_push.git" target="_blank" rel="noopener">https://gitee.com/wumeidewunv/test_push.git</a></strong></li>
+</ul>
+<p>​      的别名，master为分支名。</p>
+</li>
+<li><p>远程克隆</p>
+<ul>
+<li><strong>git clone [远程库地址]</strong>  指令  如 <strong>git clone <a href="https://gitee.com/wumeidewunv/test_push.git" target="_blank" rel="noopener">https://gitee.com/wumeidewunv/test_push.git</a></strong></li>
+<li>克隆有三个效果<ol>
+<li>完整地把远程库内容下载到本地</li>
+<li>创建origin 远程地址别名</li>
+<li>初始化本地库</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>远程拉取</p>
+<ul>
+<li><strong>git pull</strong> 命令 <ul>
+<li>pull相当于是 fetch 和 merge操作的合并，即pull = fetch + merge。</li>
+<li><strong>git fetch [远程库地址别名] [远程分支名]</strong>   将该远程库中该分支的内容拉取到本地。</li>
+<li><strong>git merge [远程库地址别名/远程分支名]</strong>   将刚才fetch到本地的内容与本地的分支合并。</li>
+<li>使用git pull 命令：<strong>git pull [远程库地址别名] [远程分支名]</strong>    直接一下子做了上面的两个操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>解决冲突</p>
+<ul>
+<li>冲突原因：如果两个人在各自本地对同一文件的同一位置都做出了各自的修改，并要将各自的修改提交到远程库，此时，后提交的会与先提交的产生冲突。即如果不是基于远程库最新版所做的修改，则该修改不能够被推送到远程库，必须先从远程库拉取。拉取下来如果进入冲突状态，则按照“分支冲突解决”操作解决即可。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="联机协作"><a href="#联机协作" class="headerlink" title="联机协作"></a>联机协作</h2><h3 id="用户协作"><a href="#用户协作" class="headerlink" title="用户协作"></a>用户协作</h3><p>​     如果想让一个用户可以操作自己的远程库，可以进入自己的远程库后，通过settings→Manage access→invite a collaborator来邀请其他用户。被邀请人登录自己的账号后，在未读信息那里可以看到该邀请信息，然后点击进去并同意即可。</p>
+<h3 id="跨团队协作"><a href="#跨团队协作" class="headerlink" title="跨团队协作"></a>跨团队协作</h3><p>​     如果两个远程库想要联结，用fork。一般是将别人的远程库fork到自己这里，然后clone下来，然后在本地修改后再推送到自己的远程库，然后再申请合并到原来的别人的远程库；主人同意合并后，就可以将修改合并过去了。步骤如下：</p>
+<ol>
+<li>登录想要复制别人的库的人的账号；</li>
+<li>利用该账号进入目标仓库，点击“fork”；</li>
+<li>fork完成后，将自己的库clone到本地，然后进行修改操作，然后再push到自己的远程库；</li>
+<li>Pull request：进入自己的那个本地库，点击 pull request→new pull request→create pull request,然后消息编辑界面，来编辑想给原主人说的话，编辑完成后，点击“create pull request”即可；</li>
+<li>原主人登录账号，进入那个远程库，此时可以看到pull request 那里有信息，点击进去，可以看到刚才那条信息，点击进去看到详细修改。点击commits,可以看到本次的提交，点击 files changed，可以看到修改的地方，对代码进行审核，审核没问题，可以回到conversation,点击merge pull request进行代码的合并，点击后，可以编辑合并信息，完成后点击confirm merge，则完成了自己远程库的修改。之后将该远程库pull到本地，就完成了该次跨团队协作。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>gitee</tag>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>死锁</title>
-    <url>/luoji/2020/04/448453639.html</url>
+    <url>/2020/04/448453639.html</url>
     <content><![CDATA[<h2 id="什么是死锁？"><a href="#什么是死锁？" class="headerlink" title="什么是死锁？"></a>什么是死锁？</h2><p>  &emsp; <strong>死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。</strong></p>
 <hr>
 <h2 id="死锁产生的原因："><a href="#死锁产生的原因：" class="headerlink" title="死锁产生的原因："></a>死锁产生的原因：</h2><ul>
@@ -72,7 +294,7 @@
   </entry>
   <entry>
     <title>Fibonacci数列</title>
-    <url>/luoji/2020/01/3330447768.html</url>
+    <url>/2020/01/3330447768.html</url>
     <content><![CDATA[<h1 id="Fibonacci数列"><a href="#Fibonacci数列" class="headerlink" title="Fibonacci数列"></a>Fibonacci数列</h1><h2 id="问题介绍"><a href="#问题介绍" class="headerlink" title="问题介绍"></a>问题介绍</h2><p>斐波那契数列是这样的一组数列：<br><img src="https://img-blog.csdnimg.cn/20200212192822244.png" alt="斐波那契数列"><br>这个数列从第三项起，每一项都等于前两项之和。</p>
 <p>现在输入一个正整数n,输出数列中的第n个数。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="分治法"><a href="#分治法" class="headerlink" title="分治法"></a>分治法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int Fibonacci(int n)</span><br><span class="line">&#123;</span><br><span class="line">   if(n &lt; 2) return n;  &#x2F;&#x2F;如果n为0，则直接返回0，如果n为1，则直接返回1</span><br><span class="line">   else return  Fibonacci(n - 1) + Fibonacci (n - 2);  &#x2F;&#x2F;如果n为大于1，返回前两项的结果之和</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -90,7 +312,7 @@
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/luoji/2020/01/1243066710.html</url>
+    <url>/2020/01/1243066710.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
